@@ -11,7 +11,10 @@ Run:
 ## Notes
 - This is a Minimum Viable Product so it only has enough main features. With advanced features, we with continue to update later.
 - If you have any problems with my project please contact me 
-[@Huy NGUYEN NGOC](huynguyenngoc.dev@gmail.com)
+[@Huy NGUYEN NGOC](https://www.facebook.com/nguyen.ngoc.huy.2k1)
+or
+&lt;[huy.nguyen22@student.passerellesnumeriques.org](mailto:huy.nguyen22@student.passerellesnumeriques.org)&gt;
+&lt;[huynguyenngoc.dev@gmail.com](mailto:huynguyenngoc.dev@gmail.com)&gt;
 
 
 ## If you need documentation about Flutter
