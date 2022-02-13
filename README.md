@@ -9,7 +9,7 @@ Run:
 - [ ] ```flutter run```
 
 ## Notes
-- This is a Minimum Viable Product so it only has enough main features. With advanced features, we with continue to update later.
+- This is a Minimum Viable Product (MVP) so it only has enough main features. With advanced features, we with continue to update later.
 - If you have any problems with my project please contact me 
 [@Huy NGUYEN NGOC](https://www.facebook.com/nguyen.ngoc.huy.2k1)
 or
