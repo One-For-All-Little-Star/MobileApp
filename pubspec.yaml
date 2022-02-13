@@ -21,23 +21,23 @@ flutter:
   assets:
     - assets/
   fonts:
-  - family: Futura
-       fonts:
-         - asset: fonts/SFUFuturaRegular.TTF
-         - asset: fonts/SFUFuturaOblique.TTF
-           style: italic
-         - asset: fonts/SFUFuturaHeavy.TTF
-           weight: 500
-         - asset: fonts/SFUFuturaHeavyOblique.TTF
-           weight: 500
-           style: italic
-         - asset: fonts/SFUFuturaBold.TTF
-           weight: 700
-         - asset: fonts/SFUFuturaBoldOblique.TTF
-           weight: 700
-           style: italic
-         - asset: fonts/SFUFuturaExtraBold.TTF
-           weight: 900
-         - asset: fonts/SFUFuturaExtraBoldOblique.TTF
-           weight: 900
-           style: italic
+    - family: Futura
+      fonts:
+        - asset: fonts/SFUFuturaRegular.TTF
+        - asset: fonts/SFUFuturaOblique.TTF
+          style: italic
+        - asset: fonts/SFUFuturaHeavy.TTF
+          weight: 500
+        - asset: fonts/SFUFuturaHeavyOblique.TTF
+          weight: 500
+          style: italic
+        - asset: fonts/SFUFuturaBold.TTF
+          weight: 700
+        - asset: fonts/SFUFuturaBoldOblique.TTF
+          weight: 700
+          style: italic
+        - asset: fonts/SFUFuturaExtraBold.TTF
+          weight: 900
+        - asset: fonts/SFUFuturaExtraBoldOblique.TTF
+          weight: 900
+          style: italic
