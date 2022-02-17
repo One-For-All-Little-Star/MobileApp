@@ -1,4 +1,4 @@
-package com.example.litter_star
+package com.example.little_star
 
 import io.flutter.embedding.android.FlutterActivity
 

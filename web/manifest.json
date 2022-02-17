@@ -1,6 +1,6 @@
 {
-    "name": "litter_star",
-    "short_name": "litter_star",
+    "name": "little_star",
+    "short_name": "little_star",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
