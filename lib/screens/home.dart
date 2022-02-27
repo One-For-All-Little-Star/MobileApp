@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/routers/app_screens.dart';
 import 'package:litter_star/utils/layouts.dart';
+import 'package:litter_star/utils/sounds.dart';
+import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:litter_star/widgets/header.dart';
-
-import '../utils/get_hex_color.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-
+    Sounds.playBackgroundSound();
     return Scaffold(
         appBar: null,
         body: Container(
@@ -24,105 +24,65 @@ class HomeScreen extends StatelessWidget {
           ),
           padding: EdgeInsets.fromLTRB(0, 0, size.height * 0.1, 0),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               const Header(),
               // Body
+              // Row 1
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                      child: Container(
-                        width: 110,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: AssetImage("assets/icons/board.png"),
-                              fit: BoxFit.cover),
-                        ),
-                        child: const Center(
-                            child: Text(
-                          "Truyện\ncổ tích",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        )),
-                      ),
-                      onTap: () {
-                        print("you clicked me");
-                      }),
-                  GestureDetector(
-                      child: Container(
-                          width: 100,
-                          height: 100,
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                            image: DecorationImage(
-                                image: AssetImage("assets/icons/shop.png"),
-                                fit: BoxFit.contain),
-                          ),
-                          child: const Center(
-                              child: Text(
-                            "Cửa\nhàng",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ))),
-                      onTap: () {
-                        print("you clicked me");
-                      }),
+                  BtnWithBG(
+                    onPressed: () => Get.toNamed(Routes.FAIRY_TALE),
+                    bgName: "board.png",
+                    text: "Truyện\ncổ tích",
+                    height: size.height / 4,
+                    width: size.width / 7,
+                    pdTop: size.height / 20,
+                  ),
+                  BtnWithBG(
+                    onPressed: () {
+                      // TODO Shop Screen
+                    },
+                    bgName: "shop.png",
+                    text: "Cửa\nhàng",
+                    height: size.height / 5,
+                    width: size.width / 5,
+                  ),
                 ],
               ),
+              // END Row 1
+              Image.asset(
+                "assets/images/chicken.gif",
+                height: size.height / 4,
+              ),
+              // Row 2
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        decoration: const BoxDecoration(
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: AssetImage("assets/icons/road_tree.png"),
-                              fit: BoxFit.contain),
-                        ),
-                        child: const Padding(
-                            padding: EdgeInsets.fromLTRB(40, 25, 0, 0),
-                            child: Text(
-                              "Lịch sử",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            )),
-                      ),
-                      onTap: () {
-                        print("you clicked me");
-                      }),
-                  GestureDetector(
-                      child: Container(
-                          width: 200,
-                          height: 150,
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                            image: DecorationImage(
-                                image: AssetImage("assets/icons/mailbox.png"),
-                                fit: BoxFit.contain),
-                          ),
-                          child: const Padding(
-                              padding: EdgeInsets.fromLTRB(100, 30, 0, 0),
-                              child: Text(
-                                "ABC",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ))),
-                      onTap: () => Get.toNamed(Routes.ALPHABET)),
+                  BtnWithBG(
+                    onPressed: () {
+                      // TODO Dashboard Screen
+                    },
+                    bgName: "road_tree.png",
+                    text: "Lịch sử",
+                    height: size.height / 3,
+                    width: size.width / 5,
+                    pdTop: size.height / 20,
+                    isCenter: false,
+                  ),
+                  BtnWithBG(
+                    onPressed: () => Get.toNamed(Routes.ALPHABET),
+                    bgName: "ABCs.png",
+                    text: "",
+                    height: size.height / 3,
+                    width: size.width / 3,
+                    isCenter: false,
+                  ),
                 ],
               ),
+              // END Row 2
+
               // End
             ],
           ),

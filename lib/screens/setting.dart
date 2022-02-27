@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:get/get.dart';
 import 'package:litter_star/utils/globals.dart';
+import 'package:litter_star/utils/sounds.dart';
 
-Future<void> showSettingScreen(context) async {
-  return showDialog<void>(
+dynamic showSettingScreen(context) {
+  return showDialog(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false,
     builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Color.fromARGB(0, 255, 255, 255).withOpacity(0.8),
+      return SettingScreen();
+    },
+  );
+}
+
+class SettingScreen extends StatelessWidget {
+  final soundStatus = hasSound;
+
+  SettingScreen({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => AlertDialog(
+        backgroundColor:
+            const Color.fromARGB(0, 255, 255, 255).withOpacity(0.8),
         alignment: Alignment.center,
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -32,18 +47,24 @@ Future<void> showSettingScreen(context) async {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Bật tắt âm lượng"),
+                const Text("Bật/Tắt nhạc nền"),
                 FlutterSwitch(
-                    value: hasSound,
+                    value: soundStatus.value,
                     showOnOff: true,
                     onToggle: (val) {
-                      hasSound = val;
+                      soundStatus.value = val;
+                      hasSound.value = val;
+                      if (hasSound.value) {
+                        Sounds.resumeBackgroundSound();
+                      } else {
+                        Sounds.pauseBackgroundSound();
+                      }
                     })
               ],
             )
           ],
         ),
-      );
-    },
-  );
+      ),
+    );
+  }
 }

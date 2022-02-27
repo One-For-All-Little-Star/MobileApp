@@ -1,5 +1,6 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'app_screens.dart';
-// DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
 
 abstract class Routes {
   Routes._();
@@ -10,7 +11,7 @@ abstract class Routes {
   static const RHYME = _Paths.RHYME;
   static const ALPHABET_LESSON = _Paths.ALPHABET_LESSON;
   static const RHYME_LESSON = _Paths.RHYME_LESSON;
-  static const VIDEO = _Paths.VIDEO;
+  static const FAIRY_TALE = _Paths.FAIRY_TALE;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const RANKING = _Paths.RANKING;
   static const SETTING = _Paths.SETTING;
@@ -23,7 +24,7 @@ abstract class _Paths {
   static const RHYME = '/rhyme';
   static const ALPHABET_LESSON = '/alphabet/lesson';
   static const RHYME_LESSON = '/rhyme/lesson';
-  static const VIDEO = '/video';
+  static const FAIRY_TALE = '/fairy-tale';
   static const DASHBOARD = '/dashboard';
   static const RANKING = '/ranking';
   static const SETTING = '/setting';

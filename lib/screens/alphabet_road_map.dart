@@ -13,66 +13,72 @@ class AlphabetRoadMap extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Card(
-          margin: const EdgeInsets.all(30),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                "Bảng chữ cái",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Container(
+          decoration: BoxDecoration(
+              image: const DecorationImage(
+                image: AssetImage("assets/images/panel.png"),
+                fit: BoxFit.contain,
               ),
-              Card(
-                  margin: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xffdb4c00),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                const Text(
-                                  "A",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 24,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 24,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 24,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )),
-                      )
-                    ],
-                  ))
-            ],
-          )),
+              borderRadius: BorderRadius.circular(10)),
+          child: Card(
+              color: Colors.transparent,
+              child: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Card(
+                        margin: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: const Color(0xffdb4c00),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      const Text(
+                                        "A",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ),
+                                      Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.yellow,
+                                            size: 24,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.yellow,
+                                            size: 24,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.yellow,
+                                            size: 24,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  )),
+                            )
+                          ],
+                        ))
+                  ],
+                ),
+              )),
+        ),
+      ),
     );
   }
 }
