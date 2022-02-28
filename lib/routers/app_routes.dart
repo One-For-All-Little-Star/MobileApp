@@ -22,7 +22,7 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const ALPHABET = '/alphabet';
   static const RHYME = '/rhyme';
-  static const ALPHABET_LESSON = '/alphabet/lesson';
+  static const ALPHABET_LESSON = '/alphabet_lesson/:letter';
   static const RHYME_LESSON = '/rhyme/lesson';
   static const FAIRY_TALE = '/fairy-tale';
   static const DASHBOARD = '/dashboard';

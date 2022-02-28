@@ -20,7 +20,7 @@ class BtnWithBG extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return RawMaterialButton(
       child: Container(
         width: width,
         height: height,
@@ -51,7 +51,7 @@ class BtnWithBG extends StatelessWidget {
                 ),
         ),
       ),
-      onTap: onPressed,
+      onPressed: onPressed,
     );
   }
 }

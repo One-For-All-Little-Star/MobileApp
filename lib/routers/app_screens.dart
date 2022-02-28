@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:litter_star/screens/alphabet_lesson.dart';
 import 'package:litter_star/screens/alphabet_road_map.dart';
 import 'package:litter_star/screens/fairy_tale.dart';
 import 'package:litter_star/screens/home.dart';
@@ -29,5 +30,9 @@ class AppScreens {
         name: _Paths.FAIRY_TALE,
         page: () => const FairyTaleScreen(),
         transition: Transition.cupertinoDialog),
+    GetPage(
+        name: _Paths.ALPHABET_LESSON,
+        page: () => AlphabetLesson(),
+        transition: Transition.fadeIn),
   ];
 }

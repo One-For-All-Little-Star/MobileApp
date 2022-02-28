@@ -34,6 +34,8 @@ flutter:
   - assets/images/
   - assets/icons/
   - assets/audio/
+  - assets/images/alphabet/
+  
 
 flutter_app_name:
   name: "Little Star"

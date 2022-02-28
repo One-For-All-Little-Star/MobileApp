@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:litter_star/routers/app_screens.dart';
+import 'package:litter_star/widgets/btn_with_bg_img.dart';
 
 class AlphabetRoadMap extends StatelessWidget {
   const AlphabetRoadMap({Key? key}) : super(key: key);
@@ -16,69 +18,106 @@ class AlphabetRoadMap extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Container(
-          decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage("assets/images/panel.png"),
-                fit: BoxFit.contain,
-              ),
-              borderRadius: BorderRadius.circular(10)),
-          child: Card(
-              color: Colors.transparent,
-              child: Container(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Card(
-                        margin: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 80,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage("assets/images/panel.png"),
+              fit: BoxFit.contain,
+            )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                BtnWithBG(
+                    onPressed: () {
+                      print("Clicked back page");
+                    },
+                    bgName: "button_left.png",
+                    text: "",
+                    height: 72,
+                    width: 72),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          BtnWithBG(
+                            onPressed: () => Get.toNamed("/alphabet_lesson/A"),
+                            bgName: "one_star.png",
+                            text: "A",
+                            height: 80,
+                            width: 80,
+                            isCenter: false,
+                            pdTop: 20,
+                          ),
+                          BtnWithBG(
+                              onPressed: () {},
+                              bgName: "lock.png",
+                              text: "",
                               height: 80,
-                              child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: const Color(0xffdb4c00),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      const Text(
-                                        "A",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 15),
-                                      ),
-                                      Row(
-                                        children: const [
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 24,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 24,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 24,
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )),
-                            )
-                          ],
-                        ))
+                              width: 80),
+                          BtnWithBG(
+                              onPressed: () {},
+                              bgName: "lock.png",
+                              text: "",
+                              height: 80,
+                              width: 80),
+                          BtnWithBG(
+                              onPressed: () {},
+                              bgName: "lock.png",
+                              text: "",
+                              height: 80,
+                              width: 80),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BtnWithBG(
+                            onPressed: () => Get.back(),
+                            bgName: "btn_yellow.png",
+                            text: "Quay\nLại",
+                            height: 80,
+                            width: 80),
+                        BtnWithBG(
+                            onPressed: () => Get.toNamed("/alphabet_lesson/A"),
+                            bgName: "btn_green.png",
+                            text: "Tiếp\nTục",
+                            height: 80,
+                            width: 80),
+                      ],
+                    )
                   ],
                 ),
-              )),
-        ),
+                BtnWithBG(
+                    onPressed: () {
+                      print("Clicked forward page");
+                    },
+                    bgName: "button_right.png",
+                    text: "",
+                    height: 72,
+                    width: 72),
+              ],
+            )),
       ),
     );
   }
 }
+
+// BtnWithBG(
+//                 onPressed: () {
+//                   print("Clicked");
+//                 },
+//                 bgName: "button_left.png",
+//                 text: "",
+//                 height: 20,
+//                 width: 20),
+//             BtnWithBG(
+//                 onPressed: () {
+//                   print("Clicked");
+//                 },
+//                 bgName: "button_right.png",
+//                 text: "",
+//                 height: 20,
+//                 width: 20),
