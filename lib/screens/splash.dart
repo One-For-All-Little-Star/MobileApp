@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
               padding: const EdgeInsets.all(15.0),
               child: TweenAnimationBuilder(
                 tween: Tween(begin: 1.0, end: 100.0),
-                duration: const Duration(seconds: 4),
+                duration: const Duration(seconds: 3),
                 builder: (context, value, _) => LinearPercentIndicator(
                   width: size.width - 50,
                   animation: true,
@@ -56,10 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   linearStrokeCap: LinearStrokeCap.roundAll,
                   progressColor: indicatorController
                       .currentProgressColor(double.parse(value.toString())),
-                  // onAnimationEnd: () => Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const HomeScreen())),
                   onAnimationEnd: () => Get.toNamed("/"),
                 ),
               )),

@@ -6,6 +6,7 @@ class BtnWithBG extends StatelessWidget {
   final double height, width, pdTop;
   final GestureTapCallback onPressed;
   final bool isCenter;
+  final double fontSize;
 
   const BtnWithBG(
       {Key? key,
@@ -15,6 +16,7 @@ class BtnWithBG extends StatelessWidget {
       required this.height,
       required this.width,
       this.pdTop = 0.0,
+      this.fontSize = 20.0,
       this.isCenter = true})
       : super(key: key);
 
@@ -36,18 +38,18 @@ class BtnWithBG extends StatelessWidget {
                   child: Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20),
+                      fontSize: fontSize),
                 ))
               : Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20),
+                      fontSize: fontSize),
                 ),
         ),
       ),

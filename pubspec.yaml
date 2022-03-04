@@ -12,12 +12,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.3.0
   percent_indicator: ^3.4.0
-  assets_audio_player: ^3.0.4+1
   url_launcher: ^6.0.20
   flame_audio: ^1.0.0
   flutter_switch: ^0.3.2
   video_player: ^2.2.19
   shared_preferences: ^2.0.13
+  permission_handler: ^9.2.0
+  flutter_widget_from_html_core: ^0.8.5+1
+  fwfh_webview: ^0.6.2+2
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +37,11 @@ flutter:
   - assets/icons/
   - assets/audio/
   - assets/images/alphabet/
+  - assets/fonts/
+  fonts:
+  - family: HP
+    fonts:
+    - asset: assets/fonts/HP001_4_hang_bold.ttf
   
 
 flutter_app_name:

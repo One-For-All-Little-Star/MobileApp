@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                       // TODO Shop Screen
                     },
                     bgName: "shop.png",
-                    text: "Cửa\nhàng",
+                    text: "",
                     height: size.height / 5,
                     width: size.width / 5,
                   ),

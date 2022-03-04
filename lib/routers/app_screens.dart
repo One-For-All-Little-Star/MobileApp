@@ -4,6 +4,7 @@ import 'package:litter_star/screens/alphabet_road_map.dart';
 import 'package:litter_star/screens/fairy_tale.dart';
 import 'package:litter_star/screens/home.dart';
 import 'package:litter_star/screens/splash.dart';
+import 'package:litter_star/widgets/video_player_screen.dart';
 
 part 'app_routes.dart';
 
@@ -34,5 +35,9 @@ class AppScreens {
         name: _Paths.ALPHABET_LESSON,
         page: () => AlphabetLesson(),
         transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.WATCH_VIDEO,
+        page: () => VideoPlayerScreen(),
+        transition: Transition.native),
   ];
 }

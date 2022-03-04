@@ -15,6 +15,7 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const RANKING = _Paths.RANKING;
   static const SETTING = _Paths.SETTING;
+  static const WATCH_VIDEO = _Paths.WATCH_VIDEO;
 }
 
 abstract class _Paths {
@@ -24,8 +25,9 @@ abstract class _Paths {
   static const RHYME = '/rhyme';
   static const ALPHABET_LESSON = '/alphabet_lesson/:letter';
   static const RHYME_LESSON = '/rhyme/lesson';
-  static const FAIRY_TALE = '/fairy-tale';
+  static const FAIRY_TALE = '/fairy_tale';
   static const DASHBOARD = '/dashboard';
   static const RANKING = '/ranking';
   static const SETTING = '/setting';
+  static const WATCH_VIDEO = '/watch_video';
 }
