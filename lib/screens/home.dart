@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   BtnWithBG(
                     onPressed: () {
-                      // TODO Shop Screen
+                      // TODO: Shop Screen
                     },
                     bgName: "shop.png",
                     text: "",
@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   BtnWithBG(
                     onPressed: () {
-                      // TODO Dashboard Screen
+                      // TODO: Dashboard Screen
                     },
                     bgName: "road_tree.png",
                     text: "Lịch sử",

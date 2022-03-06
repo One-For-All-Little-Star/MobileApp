@@ -30,7 +30,7 @@ class AlphabetRoadMap extends StatelessWidget {
             children: [
               BtnWithBG(
                   onPressed: () {
-                    print("Clicked back page");
+                    // TODO: previous lessons
                   },
                   bgName: "button_left.png",
                   text: "",
@@ -103,7 +103,7 @@ class AlphabetRoadMap extends StatelessWidget {
               ),
               BtnWithBG(
                   onPressed: () {
-                    print("Clicked forward page");
+                    // TODO: Function next lessons
                   },
                   bgName: "button_right.png",
                   text: "",

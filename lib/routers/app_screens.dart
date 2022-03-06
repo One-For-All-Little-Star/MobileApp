@@ -30,6 +30,7 @@ class AppScreens {
     GetPage(
         name: _Paths.FAIRY_TALE,
         page: () => const FairyTaleScreen(),
+        binding: FairyTaleBinding(),
         transition: Transition.cupertinoDialog),
     GetPage(
         name: _Paths.ALPHABET_LESSON,
