@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/routers/app_screens.dart';
 import 'package:litter_star/utils/layouts.dart';
-import 'package:litter_star/utils/sounds.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:litter_star/widgets/header.dart';
 
@@ -12,7 +11,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-    Sounds.playBackgroundSound();
     return Scaffold(
         appBar: null,
         body: Container(

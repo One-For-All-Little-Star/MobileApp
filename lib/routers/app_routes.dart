@@ -16,6 +16,9 @@ abstract class Routes {
   static const RANKING = _Paths.RANKING;
   static const SETTING = _Paths.SETTING;
   static const WATCH_VIDEO = _Paths.WATCH_VIDEO;
+  static const CHECK_PRONUNCIATION = _Paths.CHECK_PRONUNCIATION;
+  static const CHECK_WRITING = _Paths.CHECK_WRITING;
+  static const COMPLETE = _Paths.COMPLETE;
 }
 
 abstract class _Paths {
@@ -30,4 +33,7 @@ abstract class _Paths {
   static const RANKING = '/ranking';
   static const SETTING = '/setting';
   static const WATCH_VIDEO = '/watch_video';
+  static const CHECK_PRONUNCIATION = '/check_pronunciation/:param';
+  static const CHECK_WRITING = '/check_writing/:param';
+  static const COMPLETE = '/complete';
 }

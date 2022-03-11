@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:litter_star/json/video_list.dart';
+import 'package:litter_star/data/video_list.dart';
+import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
+import 'package:litter_star/utils/sounds.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/widgets/video_item.dart';
@@ -35,8 +37,8 @@ class FairyTaleScreen extends GetView<FairyTaleController> {
               children: [
                 BtnWithBG(
                     onPressed: () => Get.back(),
-                    bgName: "long_btn_yellow.png",
-                    text: "Quay lại",
+                    bgName: "back_button.png",
+                    text: "",
                     height: 50,
                     width: 90),
 
@@ -109,7 +111,7 @@ class FairyTaleScreen extends GetView<FairyTaleController> {
                           child: Text(
                             "Không tìm thấy truyện cổ tích nào với từ khoá\n'${controller.searchController.text}'\nVui lòng tìm kiếm lại!",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 backgroundColor: Colors.white,
                                 color: Colors.black,
                                 decoration: TextDecoration.none,
@@ -136,11 +138,17 @@ class FairyTaleController extends GetxController {
   @override
   void onInit() {
     searchController.text = '';
+    if (hasSound.value) {
+      Sounds.pauseBackgroundSound();
+    }
     super.onInit();
   }
 
   @override
-  void onClose() {
+  void onClose() async {
+    if (hasSound.value) {
+      Sounds.resumeBackgroundSound();
+    }
     searchController.dispose();
     super.onClose();
   }

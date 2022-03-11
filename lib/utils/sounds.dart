@@ -7,15 +7,16 @@ class Sounds {
     if (!kIsWeb) {
       FlameAudio.bgm.initialize();
       await FlameAudio.bgm.loadAll(['little_star.mp3']);
-      // await FlameAudio.audioCache.loadAll(
-      //     ['little_star.mp3', 'A.mp3', 'complete.mp3', 'let_read.mp3']);
+      await FlameAudio.audioCache.loadAll([
+        'A.mp3',
+        'complete.mp3',
+        'let_read.mp3',
+        'read_true.mp3',
+        'read_false.mp3',
+        'use_micro.mp3'
+      ]);
     }
   }
-
-  // static void interaction() {
-  //   if (kIsWeb) return;
-  //   FlameAudio.play('sound_interaction_name_here', volume: 0.4);
-  // }
 
   static stopBackgroundSound() {
     if (kIsWeb) return;
@@ -41,17 +42,32 @@ class Sounds {
 
   static void playReadLetter(String letter) {
     if (kIsWeb) return;
-    FlameAudio.audioCache.play('$letter.mp3');
+    FlameAudio.play('$letter.mp3');
   }
 
   static void playLetRead() {
     if (kIsWeb) return;
-    FlameAudio.audioCache.play('let_read.mp3');
+    FlameAudio.play('let_read.mp3');
   }
 
   static void playCompleteLesson() {
     if (kIsWeb) return;
-    FlameAudio.audioCache.play('complete.mp3');
+    FlameAudio.play('complete.mp3');
+  }
+
+  static void playReadTrue() {
+    if (kIsWeb) return;
+    FlameAudio.playLongAudio('read_true.mp3');
+  }
+
+  static void playReadFalse() {
+    if (kIsWeb) return;
+    FlameAudio.playLongAudio('read_false.mp3');
+  }
+
+  static void playUseMicro() {
+    if (kIsWeb) return;
+    FlameAudio.playLongAudio('use_micro.mp3');
   }
 
   static void dispose() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:litter_star/utils/get_hex_color.dart';
+import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/screens/setting.dart';
 
@@ -11,7 +12,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-
+    final data = getResourceValue();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -30,7 +31,7 @@ class Header extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Text("0",
+              child: Text("${data.gold}",
                   style: GoogleFonts.bangers(
                     textStyle: TextStyle(
                         color: HexColor("#fcc621"),
@@ -51,7 +52,7 @@ class Header extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Text("0",
+              child: Text("${data.star}",
                   style: GoogleFonts.bangers(
                     textStyle: TextStyle(
                         color: HexColor("#fcc621"),

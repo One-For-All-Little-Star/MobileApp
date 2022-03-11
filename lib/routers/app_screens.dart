@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:litter_star/screens/alphabet_lesson.dart';
 import 'package:litter_star/screens/alphabet_road_map.dart';
+import 'package:litter_star/screens/complete_screen.dart';
 import 'package:litter_star/screens/fairy_tale.dart';
 import 'package:litter_star/screens/home.dart';
 import 'package:litter_star/screens/splash.dart';
+import 'package:litter_star/utils/check_pronunciation.dart';
+import 'package:litter_star/utils/handwrite.dart';
 import 'package:litter_star/widgets/video_player_screen.dart';
 
 part 'app_routes.dart';
@@ -34,8 +37,20 @@ class AppScreens {
         transition: Transition.cupertinoDialog),
     GetPage(
         name: _Paths.ALPHABET_LESSON,
-        page: () => AlphabetLesson(),
+        page: () => const AlphabetLesson(),
         transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.CHECK_PRONUNCIATION,
+        page: () => const CheckPronunciation(),
+        transition: Transition.zoom),
+    GetPage(
+        name: _Paths.CHECK_WRITING,
+        page: () => const HandwriteScreen(),
+        transition: Transition.circularReveal),
+    GetPage(
+        name: _Paths.COMPLETE,
+        page: () => const CompleteScreen(),
+        transition: Transition.circularReveal),
     GetPage(
         name: _Paths.WATCH_VIDEO,
         page: () => VideoPlayerScreen(),
