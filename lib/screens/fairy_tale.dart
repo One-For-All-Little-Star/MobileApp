@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:litter_star/data/video_list.dart';
+import 'package:litter_star/utils/get_hex_color.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/utils/sounds.dart';
@@ -59,9 +60,12 @@ class FairyTaleScreen extends GetView<FairyTaleController> {
                               child: Container(
                                 width: size.width * 0.1,
                                 decoration: BoxDecoration(
-                                    color: Colors.yellow.shade700,
+                                    color: HexColor("#fbc10e"),
                                     borderRadius: BorderRadius.circular(20)),
-                                child: const Icon(Icons.search),
+                                child: const Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                ),
                               ),
                               onTap: () {
                                 controller.searchVideo(
@@ -89,6 +93,22 @@ class FairyTaleScreen extends GetView<FairyTaleController> {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        margin: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: HexColor("#fbc10e")),
+                        child: const Icon(
+                          Icons.mic,
+                          color: Colors.white,
+                        ),
+                      )),
+                )
 
                 /// End Search bar
               ],

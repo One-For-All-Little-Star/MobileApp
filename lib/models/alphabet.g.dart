@@ -21,13 +21,14 @@ class AlphabetAdapter extends TypeAdapter<Alphabet> {
       image: fields[1] as String,
       isLock: fields[2] as bool,
       numOfstars: fields[3] as int,
+      routeName: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Alphabet obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.letter)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class AlphabetAdapter extends TypeAdapter<Alphabet> {
       ..writeByte(2)
       ..write(obj.isLock)
       ..writeByte(3)
-      ..write(obj.numOfstars);
+      ..write(obj.numOfstars)
+      ..writeByte(4)
+      ..write(obj.routeName);
   }
 
   @override

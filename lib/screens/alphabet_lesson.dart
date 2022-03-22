@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:litter_star/models/alphabet.dart';
+import 'package:litter_star/routers/app_screens.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/utils/sounds.dart';
@@ -16,24 +18,20 @@ class AlphabetLesson extends StatefulWidget {
 }
 
 class _AlphabetLesssonState extends State<AlphabetLesson> {
-  final String? letter = Get.parameters["letter"];
-  final allDataLesson = Hive.box("database").get("alphabet");
-  late final Alphabet crrDataLesson;
+  final Alphabet crrDataLesson = Hive.box("database")
+      .get("alphabet")
+      .where((e) => e.routeName == Get.parameters["letter"])
+      .toList()[0];
+  late final String letter;
+  final String? routeName = Get.parameters["letter"];
 
   @override
   void initState() {
     if (hasSound.value) {
       Sounds.pauseBackgroundSound();
     }
-
-    crrDataLesson = allDataLesson
-        .where((e) => e.letter == Get.parameters["letter"])
-        .toList()[0];
-    print(crrDataLesson.image);
-    // if (dataLesson.numOfstars == 0) {
-    //   dataLesson.numOfstars
-    // }
-    Sounds.playReadLetter(letter.toString());
+    letter = crrDataLesson.letter;
+    Sounds.playReadLetter(routeName.toString());
     super.initState();
   }
 
@@ -42,10 +40,11 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
     if (hasSound.value) {
       Sounds.resumeBackgroundSound();
     }
+
     super.dispose();
   }
 
-  void startLessonSounds(String letter) async {
+  void startLessonSounds(String routeName) async {
     Future.delayed(
         const Duration(
           seconds: 1,
@@ -55,14 +54,14 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
         const Duration(
           seconds: 3,
         ),
-        () => Sounds.playReadLetter(letter));
+        () => Sounds.playReadLetter(routeName));
   }
 
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
     // first read
-    startLessonSounds(letter.toString());
+    startLessonSounds(routeName.toString());
 
     return Container(
       decoration: const BoxDecoration(
@@ -80,7 +79,7 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BtnWithBG(
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.toNamed(Routes.ALPHABET),
                   bgName: "back_button.png",
                   text: "",
                   height: 50,
@@ -102,7 +101,7 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
                 ),
               ),
               BtnWithBG(
-                  onPressed: () => Get.toNamed("/complete"),
+                  onPressed: () => Get.toNamed("/complete?route=$routeName"),
                   bgName: "tick_button.png",
                   text: "",
                   height: 50,
@@ -125,21 +124,21 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
                     ],
                   ),
                   Image.asset(
-                    'assets/images/alphabet/a.gif',
+                    'assets/images/alphabet/${crrDataLesson.image}',
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       BtnWithBG(
                           onPressed: () =>
-                              Sounds.playReadLetter(letter.toString()),
+                              Sounds.playReadLetter(routeName.toString()),
                           bgName: "listen.png",
                           text: "",
                           height: 90,
                           width: 90),
                       BtnWithBG(
                           onPressed: () {
-                            Get.toNamed("/check_pronunciation/$letter");
+                            Get.toNamed("/check_pronunciation/$routeName");
                           },
                           bgName: "speak.png",
                           text: "",
@@ -147,7 +146,7 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
                           width: 90),
                       BtnWithBG(
                           onPressed: () {
-                            Get.toNamed("/check_writing/$letter");
+                            Get.toNamed("/check_writing/$routeName");
                           },
                           bgName: "write.png",
                           text: "",

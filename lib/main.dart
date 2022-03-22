@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,18 +53,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late Timer _timer;
+  int _secondCount = 0;
+
   @override
   void initState() {
+    super.initState();
     if (hasSound.value) {
       Sounds.playBackgroundSound();
     }
     migrationData();
-    super.initState();
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _secondCount += 1;
+      });
+
+      Hive.box("database").put("timeUse", _secondCount);
+    });
   }
 
   @override
   void dispose() {
     Hive.close();
+    _timer.cancel();
     super.dispose();
   }
 

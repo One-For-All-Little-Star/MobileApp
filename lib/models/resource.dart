@@ -9,9 +9,9 @@ class Resource {
   }) : super();
 
   @HiveField(0)
-  final int gold;
+  int gold;
   @HiveField(1)
-  final int star;
+  int star;
 
   factory Resource.fromJson(Map<String, dynamic> json) {
     return Resource(gold: json['gold'], star: json['star']);

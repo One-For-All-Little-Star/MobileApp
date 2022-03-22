@@ -5,13 +5,32 @@ import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 
-class AlphabetRoadMap extends StatelessWidget {
+class AlphabetRoadMap extends StatefulWidget {
   const AlphabetRoadMap({Key? key}) : super(key: key);
+
+  @override
+  State<AlphabetRoadMap> createState() => _AlphabetRoadMapState();
+}
+
+class _AlphabetRoadMapState extends State<AlphabetRoadMap> {
+  late final List lessons;
+  @override
+  void initState() {
+    super.initState();
+    lessons = getAlphabetData();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-    final lessons = getAlphabetData();
     final int lessonPerPage = (size.height * 0.035).floor();
+
     RxInt firstIndex = 0.obs;
     RxInt lastIndex = lessonPerPage.obs;
 
@@ -60,7 +79,7 @@ class AlphabetRoadMap extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        width: size.width * 0.55,
+                        width: size.width * 0.6,
                         child: Wrap(
                           alignment: WrapAlignment.center,
                           children: [
@@ -68,21 +87,11 @@ class AlphabetRoadMap extends StatelessWidget {
                                 i < lastIndex.value;
                                 i++)
                               BtnWithBG(
-                                onPressed: () => {
-                                  if (!lessons[i].isLock)
-                                    {
-                                      Get.toNamed(
-                                          "/alphabet_lesson/${lessons[i].letter}")
-                                    }
-                                  else
-                                    {
-                                      Get.snackbar(
-                                          "Màn chơi này hiện đang khoá",
-                                          "Bạn phải hoàn thành màn chơi trước để mở khoá màn chơi này!",
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          colorText: Colors.white,
-                                          backgroundColor: Colors.black54)
-                                    }
+                                onPressed: () {
+                                  if (!lessons[i].isLock) {
+                                    Get.toNamed(
+                                        "/alphabet_lesson/${lessons[i].routeName}");
+                                  }
                                 },
                                 bgName: lessons[i].isLock
                                     ? "lock.png"

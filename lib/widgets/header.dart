@@ -6,13 +6,26 @@ import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/screens/setting.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   const Header({Key? key}) : super(key: key);
+
+  @override
+  _Header createState() => _Header();
+}
+
+class _Header extends State<Header> {
+  // ignore: prefer_typing_uninitialized_variables
+  late final data;
+  @override
+  void initState() {
+    super.initState();
+    data = getResourceValue();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-    final data = getResourceValue();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -62,13 +75,12 @@ class Header extends StatelessWidget {
             ),
           ],
         ),
-        IconButton(
-            tooltip: "Cài đặt",
-            onPressed: () => showSettingScreen(context),
-            icon: Image.asset(
+        InkWell(
+            onTap: () => showSettingScreen(context),
+            child: Image.asset(
               "assets/icons/settings.png",
-              width: 150,
-              height: 100.0,
+              width: 155,
+              height: 45,
             ))
       ],
     );

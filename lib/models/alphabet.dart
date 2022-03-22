@@ -8,15 +8,18 @@ class Alphabet {
     required this.image,
     this.isLock = true,
     this.numOfstars = 0,
+    required this.routeName,
   });
   @HiveField(0)
   final String letter;
   @HiveField(1)
   final String image;
   @HiveField(2)
-  final bool isLock;
+  bool isLock;
   @HiveField(3)
-  final int numOfstars;
+  int numOfstars;
+  @HiveField(4)
+  final String routeName;
 
   @override
   String toString() {
@@ -25,9 +28,11 @@ class Alphabet {
 
   factory Alphabet.fromJson(Map<String, dynamic> json) {
     return Alphabet(
-        letter: json['letter'],
-        image: json['image'],
-        isLock: json['isLock'],
-        numOfstars: json['numOfStars']);
+      letter: json['letter'],
+      image: json['image'],
+      isLock: json['isLock'],
+      numOfstars: json['numOfStars'],
+      routeName: json['routeName'],
+    );
   }
 }

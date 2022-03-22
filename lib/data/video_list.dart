@@ -4,6 +4,11 @@ class VideoList {
   static List<Video> getVideoList() {
     return [
       Video(
+          name: "ABC Vui từng giờ | Tập 13: Chữ B | VTV7",
+          link: "https://www.youtube.com/embed/a9kTaQY72MU",
+          thumbnail: "https://img.youtube.com/vi/a9kTaQY72MU/maxresdefault.jpg",
+          description: "Chương trình thiếu nhi"),
+      Video(
           name: "Sơn Tinh - Thuỷ Tinh",
           link: "https://www.youtube.com/embed/6b_ftItlmuQ",
           thumbnail: "https://img.youtube.com/vi/6b_ftItlmuQ/maxresdefault.jpg",

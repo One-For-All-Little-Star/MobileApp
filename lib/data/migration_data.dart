@@ -7,6 +7,7 @@ Future<void> migrationData() async {
   Hive.registerAdapter(AlphabetAdapter());
   Hive.registerAdapter(ResourceAdapter());
 
+  /// Set up database
   Box box = await Hive.openBox("database");
 
   ///  Migration data for Resource game (gold and star)
@@ -25,5 +26,13 @@ Future<void> migrationData() async {
   var currentAlphabet = box.get("currentLetter");
   if (currentAlphabet == null) {
     box.put("currentLetter", "A");
+  }
+  var currentPronunciation = box.get("pronunciation");
+  if (currentPronunciation == null) {
+    box.put("pronunciation", false);
+  }
+  var currentWriting = box.get("writing");
+  if (currentWriting == null) {
+    box.put("writing", false);
   }
 }

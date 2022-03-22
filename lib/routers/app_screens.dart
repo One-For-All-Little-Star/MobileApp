@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:litter_star/screens/alphabet_lesson.dart';
 import 'package:litter_star/screens/alphabet_road_map.dart';
 import 'package:litter_star/screens/complete_screen.dart';
+import 'package:litter_star/screens/dashboard.dart';
 import 'package:litter_star/screens/fairy_tale.dart';
 import 'package:litter_star/screens/home.dart';
 import 'package:litter_star/screens/splash.dart';
@@ -45,7 +46,7 @@ class AppScreens {
         transition: Transition.zoom),
     GetPage(
         name: _Paths.CHECK_WRITING,
-        page: () => const HandwriteScreen(),
+        page: () => HandwriteScreen(),
         transition: Transition.circularReveal),
     GetPage(
         name: _Paths.COMPLETE,
@@ -54,6 +55,10 @@ class AppScreens {
     GetPage(
         name: _Paths.WATCH_VIDEO,
         page: () => VideoPlayerScreen(),
+        transition: Transition.native),
+    GetPage(
+        name: _Paths.DASHBOARD,
+        page: () => const Dashboard(),
         transition: Transition.native),
   ];
 }

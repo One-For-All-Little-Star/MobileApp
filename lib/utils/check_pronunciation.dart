@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:litter_star/models/alphabet.dart';
 import 'package:litter_star/utils/sounds.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -16,11 +18,16 @@ class _CheckPronunciationState extends State<CheckPronunciation> {
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
-  String goalToCheck = " ${Get.parameters["param"]}";
+  final Alphabet crrDataLesson = Hive.box("database")
+      .get("alphabet")
+      .where((e) => e.routeName == Get.parameters["param"])
+      .toList()[0];
+  late String goalToCheck;
   bool? isCheck;
   @override
   void initState() {
     super.initState();
+    goalToCheck = crrDataLesson.letter;
     _initSpeech();
   }
 

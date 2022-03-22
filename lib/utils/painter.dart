@@ -44,5 +44,6 @@ class DigitalInkPainter extends CustomPainter {
   }
 
   @override
+  // ignore: avoid_renaming_method_parameters
   bool shouldRepaint(DigitalInkPainter oldPainter) => true;
 }

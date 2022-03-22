@@ -1,11 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:litter_star/models/alphabet.dart';
+import 'package:litter_star/models/resource.dart';
 import 'package:litter_star/routers/app_screens.dart';
+import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 
-class CompleteScreen extends StatelessWidget {
+class CompleteScreen extends StatefulWidget {
   const CompleteScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CompleteScreen> createState() => _CompleteScreenState();
+}
+
+class _CompleteScreenState extends State<CompleteScreen> {
+  final List<dynamic> allDataLesson = Hive.box("database").get("alphabet");
+  late Alphabet crrDataLesson;
+  late final int crrIndexLesson;
+  int totalGold = 0; // the number of gold when complete a lesson
+  late Resource
+      tempResource; // temp varriable to save and update the number gold and star in db
+  @override
+  void initState() {
+    /// define stage
+    crrDataLesson = allDataLesson
+        .where((e) => e.routeName == Get.parameters["route"])
+        .toList()[0];
+
+    crrIndexLesson =
+        allDataLesson.indexWhere((e) => e.routeName == crrDataLesson.routeName);
+
+    tempResource = getResourceValue();
+
+    ///calculate star and gold
+    if (crrDataLesson.numOfstars == 0) {
+      crrDataLesson.numOfstars = 1;
+      totalGold += 50;
+    }
+
+    ///update gold
+    tempResource.gold += totalGold;
+
+    Hive.box("database").put("resource", tempResource);
+
+    /// update current letter
+    if (crrIndexLesson < allDataLesson.length - 1) {
+      if (allDataLesson[crrIndexLesson + 1].isLock) {
+        allDataLesson[crrIndexLesson + 1].isLock = false;
+      }
+      Hive.box("database").put(
+          "currentLetter", "${allDataLesson[crrIndexLesson + 1].routeName}");
+    }
+
+    /// update alphabet database
+    allDataLesson[crrIndexLesson] = crrDataLesson;
+    Hive.box("database").put("alphabet", allDataLesson);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +97,7 @@ class CompleteScreen extends StatelessWidget {
                         height: size.height * 0.15,
                       ),
                       Image.asset(
-                        "assets/icons/get_three.png",
+                        "assets/icons/get_${crrDataLesson.numOfstars == 1 ? 'one' : crrDataLesson.numOfstars == 2 ? 'two' : 'three'}.png",
                         width: size.width * 0.25,
                       ),
                       const Text(
@@ -58,9 +117,9 @@ class CompleteScreen extends StatelessWidget {
                             fit: BoxFit.fill,
                           ),
                         ),
-                        child: const Center(
-                          child: Text("200",
-                              style: TextStyle(
+                        child: Center(
+                          child: Text("${tempResource.gold}",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -79,7 +138,8 @@ class CompleteScreen extends StatelessWidget {
                             fontSize: 18,
                           ),
                           BtnWithBG(
-                            onPressed: () => Get.toNamed(Routes.ALPHABET),
+                            onPressed: () => Get.toNamed(
+                                "/alphabet_lesson/${getCurrentLetter()}"),
                             bgName: "long_btn_green.png",
                             text: "Tiếp tục",
                             height: 50,

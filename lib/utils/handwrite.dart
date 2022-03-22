@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:learning_digital_ink_recognition/learning_digital_ink_recognition.dart';
+import 'package:litter_star/models/alphabet.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:provider/provider.dart';
 import 'painter.dart';
 
 class HandwriteScreen extends StatelessWidget {
-  const HandwriteScreen({Key? key}) : super(key: key);
+  HandwriteScreen({Key? key}) : super(key: key);
+  final Alphabet crrDataLesson = Hive.box("database")
+      .get("alphabet")
+      .where((e) => e.routeName == Get.parameters["param"])
+      .toList()[0];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chữ cần viết là "${Get.parameters["param"]!.toLowerCase()}" hoặc "${Get.parameters["param"]!.toUpperCase()}"',
+          'Chữ cần viết là "${crrDataLesson.letter.toLowerCase()}" hoặc "${crrDataLesson.letter.toUpperCase()}"',
           style: const TextStyle(fontFamily: "HP"),
         ),
       ),
@@ -38,12 +44,17 @@ class _HandwriteState extends State<Handwrite> {
   late DigitalInkRecognition _recognition;
   double get _width => MediaQuery.of(context).size.width * 0.6;
   double get _height => MediaQuery.of(context).size.height;
-  String? goalToCheck = Get.parameters["param"];
+  late String goalToCheck;
+  final Alphabet crrDataLesson = Hive.box("database")
+      .get("alphabet")
+      .where((e) => e.routeName == Get.parameters["param"])
+      .toList()[0];
 
   @override
   void initState() {
-    _recognition = DigitalInkRecognition(model: _model);
     super.initState();
+    _recognition = DigitalInkRecognition(model: _model);
+    goalToCheck = crrDataLesson.letter;
   }
 
   @override
@@ -179,7 +190,7 @@ class _HandwriteState extends State<Handwrite> {
                             ),
                           ),
                           Text(
-                            state.checkResult()
+                            state.checkResult(goalToCheck)
                                 ? "Hoàn toàn chính xác"
                                 : "Chưa đúng rồi!\nHãy thử lại lần nữa.",
                             textAlign: TextAlign.center,
@@ -188,7 +199,7 @@ class _HandwriteState extends State<Handwrite> {
                               fontFamily: "HP",
                             ),
                           ),
-                          state.checkResult()
+                          state.checkResult(goalToCheck)
                               ? BtnWithBG(
                                   onPressed: () => Get.back(),
                                   bgName: "tick_button.png",
@@ -227,8 +238,6 @@ class HandwriteState extends ChangeNotifier {
   List<List<Offset>> _writings = [];
   List<RecognitionCandidate> _data = [];
   bool isProcessing = false;
-  String? goalToCheck = Get.parameters["param"];
-
   List<List<Offset>> get writings => _writings;
   List<RecognitionCandidate> get data => _data;
   bool get isNotProcessing => !isProcessing;
@@ -284,7 +293,13 @@ class HandwriteState extends ChangeNotifier {
     return isNotEmpty ? _data.map((c) => c.text).toList().join(', ') : '';
   }
 
-  bool checkResult() {
-    return _data.first.text.toLowerCase() == goalToCheck!.toLowerCase();
+  bool checkResult(String goalToCheck) {
+    bool result = _data.first.text.toLowerCase() == goalToCheck.toLowerCase();
+    if (result) {
+      Hive.box('database').put("writing", true);
+    } else {
+      Hive.box('database').put("writing", false);
+    }
+    return result;
   }
 }

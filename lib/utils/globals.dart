@@ -8,12 +8,29 @@ Resource getResourceValue() {
   Resource snapshot = Hive.box('database').get("resource");
 
   /// sum all star and update db
-  var snapshotAlphabet = getAlphabetData();
+  List<dynamic> snapshotAlphabet = getAlphabetData();
+  var temp = 0;
 
-  // snapshotAlphabet.fold(0, (pre, crr) => {print("${pre! + crr.numOfstars}")});
+  /// update star
+  for (var i = 0; i < snapshotAlphabet.length; i++) {
+    temp = (temp + snapshotAlphabet[i].numOfstars) as int;
+  }
+  snapshot.star = temp;
+  temp = 0;
 
-  // print(star);
+  Hive.box('database').put("resource", snapshot);
+
   return snapshot;
+}
+
+bool isCheckPronunciation() {
+  bool pronun = Hive.box('database').get("pronunciation");
+  return pronun;
+}
+
+bool isCheckWriting() {
+  bool writing = Hive.box('database').get("writing");
+  return writing;
 }
 
 List<dynamic> getAlphabetData() {
