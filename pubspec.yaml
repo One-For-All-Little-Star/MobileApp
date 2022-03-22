@@ -24,6 +24,7 @@ dependencies:
   hive_flutter: ^1.1.0
   learning_digital_ink_recognition: ^0.0.2
   provider: ^6.0.2
+  syncfusion_flutter_charts: ^19.4.56
 
 dev_dependencies:
   flutter_test:
