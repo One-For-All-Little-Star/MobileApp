@@ -69,11 +69,18 @@ class _CheckPronunciationState extends State<CheckPronunciation> {
   }
 
   void checkPronun() async {
+    print(goalToCheck);
     if (_lastWords.isNotEmpty &&
         (_lastWords.toLowerCase().contains(goalToCheck.toLowerCase()))) {
-      isCheck = true;
+      setState(() {
+        isCheck = true;
+        Hive.box('database').put("pronunciation", true);
+      });
     } else {
-      isCheck = false;
+      setState(() {
+        isCheck = false;
+        Hive.box('database').put("pronunciation", false);
+      });
     }
   }
 

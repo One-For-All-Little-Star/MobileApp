@@ -41,9 +41,19 @@ class _CompleteScreenState extends State<CompleteScreen> {
       totalGold += 50;
     }
 
+    if (crrDataLesson.numOfstars < 3) {
+      if (isCheckPronunciation()) {
+        crrDataLesson.numOfstars += 1;
+        totalGold += 50;
+      }
+      if (isCheckWriting()) {
+        crrDataLesson.numOfstars += 1;
+        totalGold += 100;
+      }
+    }
+
     ///update gold
     tempResource.gold += totalGold;
-
     Hive.box("database").put("resource", tempResource);
 
     /// update current letter
@@ -63,6 +73,8 @@ class _CompleteScreenState extends State<CompleteScreen> {
 
   @override
   void dispose() {
+    totalGold = 0; //reset
+
     super.dispose();
   }
 
@@ -118,7 +130,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
                           ),
                         ),
                         child: Center(
-                          child: Text("${tempResource.gold}",
+                          child: Text("${totalGold}",
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
