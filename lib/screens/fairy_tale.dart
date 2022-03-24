@@ -7,74 +7,199 @@ import 'package:litter_star/utils/sounds.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/widgets/video_item.dart';
+import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
-class FairyTaleBinding implements Bindings {
+class FairyTaleScreen extends StatefulWidget {
+  const FairyTaleScreen({Key? key}) : super(key: key);
+
   @override
-  void dependencies() {
-    Get.lazyPut(() => FairyTaleController());
-  }
+  State<FairyTaleScreen> createState() => _FairyTaleScreenState();
 }
 
-class FairyTaleScreen extends GetView<FairyTaleController> {
-  const FairyTaleScreen({Key? key}) : super(key: key);
+class _FairyTaleScreenState extends State<FairyTaleScreen> {
+  ///set up search video by voice
+  final SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false, isListening = false;
+  String _lastWords = '';
+
+  ///control search video by text
+  final searchController = TextEditingController();
+  final originVideoList = VideoList.getVideoList();
+  var videosShowed;
+
+  void searchVideo(String text) {
+    setState(() {
+      videosShowed = (originVideoList.where((video) =>
+              video.name.toLowerCase().contains(text.toLowerCase()) == true))
+          .toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      videosShowed = VideoList.getVideoList();
+      searchController.text = '';
+    });
+    if (hasSound.value) {
+      Sounds.pauseBackgroundSound();
+    }
+    _initSpeech();
+  }
+
+  @override
+  void dispose() {
+    if (hasSound.value) {
+      Sounds.resumeBackgroundSound();
+    }
+    searchController.dispose();
+    super.dispose();
+  }
+
+  ///control search video by voice
+
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  Future<void> _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult, localeId: "vi_VN");
+    setState(() {
+      isListening = true;
+    });
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {
+      isListening = false;
+    });
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _lastWords = result.recognizedWords;
+    });
+    searchVideo(_lastWords);
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
 
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/fairy_tales_background.png"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Obx(
-        () => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            /// Header
-            Row(
-              children: [
-                BtnWithBG(
-                    onPressed: () => Get.back(),
-                    bgName: "back_button.png",
-                    text: "",
-                    height: 50,
-                    width: 90),
+    return Scaffold(
+      body: Stack(children: [
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/fairy_tales_background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              /// Header
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    BtnWithBG(
+                        onPressed: () => Get.back(),
+                        bgName: "back_button.png",
+                        text: "",
+                        height: 50,
+                        width: size.width * 0.12),
 
-                /// Search Bar
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: SizedBox(
-                    width: size.width * 0.7,
-                    height: 45,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: TextFormField(
-                        validator: controller.validator,
-                        controller: controller.searchController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            suffixIcon: InkWell(
-                              child: Container(
-                                width: size.width * 0.1,
-                                decoration: BoxDecoration(
-                                    color: HexColor("#fbc10e"),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: const Icon(
-                                  Icons.search,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onTap: () {
-                                controller.searchVideo(
-                                    controller.searchController.text);
+                    /// Search Bar
+                    SizedBox(
+                      width: size.width * 0.8,
+                      height: 45,
+                      child: Material(
+                        elevation: 5,
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: TextFormField(
+                          controller: searchController,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.search,
+                          onFieldSubmitted: (value) {
+                            searchVideo(value);
+                          },
+                          decoration: InputDecoration(
+                            isCollapsed: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 2),
+
+                            /// add suffix
+                            suffix: IconButton(
+                              onPressed: () {
+                                searchController.clear();
                               },
+                              icon: const Icon(
+                                Icons.cancel_outlined,
+                                color: Colors.grey,
+                                size: 16,
+                              ),
                             ),
+                            suffixIcon: Container(
+                              width: _speechEnabled
+                                  ? size.width * 0.16
+                                  : size.width * 0.1,
+                              decoration: BoxDecoration(
+                                color: HexColor("#fbc10e"),
+                                borderRadius: const BorderRadius.horizontal(
+                                    right: Radius.circular(20)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Visibility(
+                                    visible: _speechEnabled,
+                                    child: InkWell(
+                                      child: Container(
+                                        width: size.width * 0.08,
+                                        decoration: const BoxDecoration(
+                                            border: Border(
+                                          right: BorderSide(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                        )),
+                                        child: const Icon(
+                                          Icons.mic,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      onTap: _speechToText.isListening
+                                          ? _stopListening
+                                          : _startListening,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    child: SizedBox(
+                                      width: size.width * 0.08,
+                                      child: const Icon(
+                                        Icons.search,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      searchVideo(searchController.text);
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            /// style boder
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide.none),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                                 borderSide: BorderSide(
@@ -83,106 +208,77 @@ class FairyTaleScreen extends GetView<FairyTaleController> {
                             hintStyle: const TextStyle(
                                 color: Color.fromARGB(255, 200, 202, 202),
                                 fontWeight: FontWeight.bold),
-                            filled: true,
-                            contentPadding:
-                                const EdgeInsets.only(left: 20, top: 10),
-                            focusColor: Colors.red),
-                        style: const TextStyle(fontSize: 15),
-                        maxLines: 1,
+                          ),
+
+                          /// style text input
+                          style: const TextStyle(fontSize: 18),
+                          maxLines: 1,
+                        ),
                       ),
+                    ),
+
+                    /// End Search bar
+                  ],
+                ),
+              ),
+
+              /// Show List Video
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Wrap(
+                      spacing: 5,
+                      direction: Axis.horizontal,
+                      children: [
+                        if (videosShowed.isNotEmpty)
+                          for (var item in videosShowed) VideoItem(video: item)
+                        else
+                          Center(
+                            child: Text(
+                              "Không tìm thấy truyện cổ tích nào với từ khoá\n'${searchController.text}'\nVui lòng tìm kiếm lại!",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  backgroundColor: Colors.white,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none,
+                                  fontSize: 45),
+                            ),
+                          )
+                      ],
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        margin: const EdgeInsets.all(20),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: HexColor("#fbc10e")),
-                        child: const Icon(
-                          Icons.mic,
-                          color: Colors.white,
-                        ),
-                      )),
-                )
+              )
+            ],
+          ),
+        ),
 
-                /// End Search bar
-              ],
+        ///black overlay when use search by voice function
+        Visibility(
+          visible: isListening,
+          child: Padding(
+            padding: EdgeInsets.only(top: size.height * 0.15),
+            child: Container(
+              width: double.infinity,
+              color: Colors.black54,
             ),
-
-            /// Show List Video
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Wrap(
-                    spacing: 5,
-                    direction: Axis.horizontal,
-                    children: [
-                      if (controller.videosShowed.isNotEmpty)
-                        for (var item in controller.videosShowed)
-                          VideoItem(video: item)
-                      else
-                        Center(
-                          child: Text(
-                            "Không tìm thấy truyện cổ tích nào với từ khoá\n'${controller.searchController.text}'\nVui lòng tìm kiếm lại!",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                backgroundColor: Colors.white,
-                                color: Colors.black,
-                                decoration: TextDecoration.none,
-                                fontSize: 45),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
+          ),
+        )
+      ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Visibility(
+        visible: isListening,
+        child: RippleAnimation(
+          repeat: true,
+          color: Colors.blue,
+          minRadius: 60,
+          ripplesCount: 5,
+          child: FloatingActionButton(
+              onPressed: _stopListening,
+              child: const Icon(Icons.mic_none_outlined)),
         ),
       ),
     );
-  }
-}
-
-class FairyTaleController extends GetxController {
-  final searchController = TextEditingController();
-  final originVideoList = VideoList.getVideoList();
-  var videosShowed = VideoList.getVideoList().obs;
-
-  @override
-  void onInit() {
-    searchController.text = '';
-    if (hasSound.value) {
-      Sounds.pauseBackgroundSound();
-    }
-    super.onInit();
-  }
-
-  @override
-  void onClose() async {
-    if (hasSound.value) {
-      Sounds.resumeBackgroundSound();
-    }
-    searchController.dispose();
-    super.onClose();
-  }
-
-  String? validator(String? value) {
-    if (value!.isEmpty) {
-      return 'Bạn phải nhập nội dung muốn tìm kiếm';
-    }
-    return null;
-  }
-
-  Future<void> searchVideo(String text) async {
-    videosShowed.value = (originVideoList.where((video) =>
-            video.name.toLowerCase().contains(text.toLowerCase()) == true))
-        .toList();
   }
 }

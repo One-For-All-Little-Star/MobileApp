@@ -25,6 +25,7 @@ dependencies:
   learning_digital_ink_recognition: ^0.0.2
   provider: ^6.0.2
   syncfusion_flutter_charts: ^19.4.56
+  simple_ripple_animation: ^0.0.3
 
 dev_dependencies:
   flutter_test:

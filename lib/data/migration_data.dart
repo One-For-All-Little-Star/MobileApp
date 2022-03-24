@@ -2,6 +2,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:litter_star/data/alphabet_list_default.dart';
 import 'package:litter_star/models/alphabet.dart';
 import 'package:litter_star/models/resource.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> migrationData() async {
   Hive.registerAdapter(AlphabetAdapter());

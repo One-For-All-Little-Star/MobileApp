@@ -21,6 +21,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
   late Alphabet crrDataLesson;
   late final int crrIndexLesson;
   int totalGold = 0; // the number of gold when complete a lesson
+  int totalStar = 1; // the number of star when complete a lesson
   late Resource
       tempResource; // temp varriable to save and update the number gold and star in db
   @override
@@ -36,20 +37,40 @@ class _CompleteScreenState extends State<CompleteScreen> {
     tempResource = getResourceValue();
 
     ///calculate star and gold
-    if (crrDataLesson.numOfstars == 0) {
-      crrDataLesson.numOfstars = 1;
-      totalGold += 50;
+    switch (crrDataLesson.numOfstars) {
+      case 0:
+        crrDataLesson.numOfstars = 1;
+        totalGold += 50;
+        break;
+      case 1:
+        if (isCheckPronunciation()) {
+          crrDataLesson.numOfstars += 1;
+          totalGold += 50;
+        }
+        if (isCheckWriting()) {
+          crrDataLesson.numOfstars += 1;
+          totalGold += 100;
+        }
+        break;
+      case 2:
+        if (isCheckPronunciation() && isCheckWriting()) {
+          crrDataLesson.numOfstars += 1;
+        }
+        if (isCheckPronunciation()) {
+          totalGold += 50;
+        }
+        if (isCheckWriting()) {
+          totalGold += 100;
+        }
+        break;
+      default:
     }
 
-    if (crrDataLesson.numOfstars < 3) {
-      if (isCheckPronunciation()) {
-        crrDataLesson.numOfstars += 1;
-        totalGold += 50;
-      }
-      if (isCheckWriting()) {
-        crrDataLesson.numOfstars += 1;
-        totalGold += 100;
-      }
+    if (isCheckPronunciation()) {
+      ++totalStar;
+    }
+    if (isCheckWriting()) {
+      ++totalStar;
     }
 
     ///update gold
@@ -74,7 +95,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
   @override
   void dispose() {
     totalGold = 0; //reset
-
+    totalStar = 1;
     super.dispose();
   }
 
@@ -109,7 +130,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
                         height: size.height * 0.15,
                       ),
                       Image.asset(
-                        "assets/icons/get_${crrDataLesson.numOfstars == 1 ? 'one' : crrDataLesson.numOfstars == 2 ? 'two' : 'three'}.png",
+                        "assets/icons/get_${totalStar == 1 ? 'one' : totalStar == 2 ? 'two' : 'three'}.png",
                         width: size.width * 0.25,
                       ),
                       const Text(
@@ -130,7 +151,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
                           ),
                         ),
                         child: Center(
-                          child: Text("${totalGold}",
+                          child: Text("$totalGold",
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,

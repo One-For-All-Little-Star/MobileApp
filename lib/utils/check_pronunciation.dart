@@ -69,7 +69,6 @@ class _CheckPronunciationState extends State<CheckPronunciation> {
   }
 
   void checkPronun() async {
-    print(goalToCheck);
     if (_lastWords.isNotEmpty &&
         (_lastWords.toLowerCase().contains(goalToCheck.toLowerCase()))) {
       setState(() {
