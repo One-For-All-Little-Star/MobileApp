@@ -5,6 +5,7 @@ import 'package:learning_digital_ink_recognition/learning_digital_ink_recognitio
 import 'package:litter_star/models/alphabet.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
 import 'package:provider/provider.dart';
+
 import 'painter.dart';
 
 class HandwriteScreen extends StatelessWidget {

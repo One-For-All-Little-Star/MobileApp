@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -26,6 +28,8 @@ class _CompleteScreenState extends State<CompleteScreen> {
       tempResource; // temp varriable to save and update the number gold and star in db
   @override
   void initState() {
+    super.initState();
+
     /// define stage
     crrDataLesson = allDataLesson
         .where((e) => e.routeName == Get.parameters["route"])
@@ -67,10 +71,10 @@ class _CompleteScreenState extends State<CompleteScreen> {
     }
 
     if (isCheckPronunciation()) {
-      ++totalStar;
+      totalStar++;
     }
     if (isCheckWriting()) {
-      ++totalStar;
+      totalStar++;
     }
 
     ///update gold
@@ -78,7 +82,10 @@ class _CompleteScreenState extends State<CompleteScreen> {
     Hive.box("database").put("resource", tempResource);
 
     /// update current letter
-    if (crrIndexLesson < allDataLesson.length - 1) {
+
+    if (crrIndexLesson < allDataLesson.length - 1 &&
+        allDataLesson[crrIndexLesson + 1].isLock &&
+        totalStar > 1) {
       if (allDataLesson[crrIndexLesson + 1].isLock) {
         allDataLesson[crrIndexLesson + 1].isLock = false;
       }
@@ -89,34 +96,40 @@ class _CompleteScreenState extends State<CompleteScreen> {
     /// update alphabet database
     allDataLesson[crrIndexLesson] = crrDataLesson;
     Hive.box("database").put("alphabet", allDataLesson);
-    super.initState();
+
+    log("open complete screen");
   }
 
   @override
-  void dispose() {
-    totalGold = 0; //reset
+  Future<void> dispose() async {
+    //reset
+    totalGold = 0;
     totalStar = 1;
+    await Hive.box('database').put("pronunciation", false);
+    await Hive.box('database').put("writing", false);
+    log("close complete screen");
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/complete_background.png"),
-          fit: BoxFit.cover,
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/complete_background.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Column(
-          children: [
-            SizedBox(
-              width: size.width * 0.55,
-              height: size.height * 0.8,
-              child: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: [
+              SizedBox(
+                width: size.width * 0.55,
+                height: size.height * 0.8,
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -185,16 +198,18 @@ class _CompleteScreenState extends State<CompleteScreen> {
                   ),
                 ),
               ),
-            ),
-            BtnWithBG(
-              onPressed: () => Get.toNamed(Routes.ALPHABET),
-              bgName: "long_btn_yellow.png",
-              text: "Quay lại",
-              height: 60,
-              width: 100,
-              fontSize: 20,
-            )
-          ],
+              BtnWithBG(
+                onPressed: () {
+                  Get.toNamed(Routes.ALPHABET);
+                },
+                bgName: "long_btn_yellow.png",
+                text: "Quay lại",
+                height: 60,
+                width: 100,
+                fontSize: 20,
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:litter_star/screens/complete_screen.dart';
 import 'package:litter_star/screens/dashboard.dart';
 import 'package:litter_star/screens/fairy_tale.dart';
 import 'package:litter_star/screens/home.dart';
+import 'package:litter_star/screens/shop.dart';
 import 'package:litter_star/screens/splash.dart';
 import 'package:litter_star/utils/check_pronunciation.dart';
 import 'package:litter_star/utils/handwrite.dart';
@@ -58,6 +59,10 @@ class AppScreens {
     GetPage(
         name: _Paths.DASHBOARD,
         page: () => const Dashboard(),
+        transition: Transition.native),
+    GetPage(
+        name: _Paths.SHOP,
+        page: () => const ShopScreen(),
         transition: Transition.native),
   ];
 }

@@ -19,6 +19,7 @@ abstract class Routes {
   static const CHECK_PRONUNCIATION = _Paths.CHECK_PRONUNCIATION;
   static const CHECK_WRITING = _Paths.CHECK_WRITING;
   static const COMPLETE = _Paths.COMPLETE;
+  static const SHOP = _Paths.SHOP;
 }
 
 abstract class _Paths {
@@ -36,4 +37,5 @@ abstract class _Paths {
   static const CHECK_PRONUNCIATION = '/check_pronunciation/:param';
   static const CHECK_WRITING = '/check_writing/:param';
   static const COMPLETE = '/complete';
+  static const SHOP = '/shop';
 }

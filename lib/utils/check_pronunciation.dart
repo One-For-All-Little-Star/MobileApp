@@ -27,7 +27,7 @@ class _CheckPronunciationState extends State<CheckPronunciation> {
   @override
   void initState() {
     super.initState();
-    goalToCheck = crrDataLesson.letter;
+    goalToCheck = crrDataLesson.pronunciation;
     _initSpeech();
   }
 
@@ -64,22 +64,18 @@ class _CheckPronunciationState extends State<CheckPronunciation> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
+      checkPronun();
     });
-    checkPronun();
   }
 
   void checkPronun() async {
     if (_lastWords.isNotEmpty &&
         (_lastWords.toLowerCase().contains(goalToCheck.toLowerCase()))) {
-      setState(() {
-        isCheck = true;
-        Hive.box('database').put("pronunciation", true);
-      });
+      isCheck = true;
+      await Hive.box('database').put("pronunciation", true);
     } else {
-      setState(() {
-        isCheck = false;
-        Hive.box('database').put("pronunciation", false);
-      });
+      isCheck = false;
+      await Hive.box('database').put("pronunciation", false);
     }
   }
 
@@ -87,7 +83,7 @@ class _CheckPronunciationState extends State<CheckPronunciation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kiểm tra phát âm chữ "$goalToCheck"'),
+        title: Text('Kiểm tra phát âm chữ "${crrDataLesson.letter}"'),
       ),
       body: Center(
         child: Column(

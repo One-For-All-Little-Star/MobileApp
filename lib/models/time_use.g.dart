@@ -1,47 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'alphabet.dart';
+part of 'time_use.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class AlphabetAdapter extends TypeAdapter<Alphabet> {
+class TimeUseAdapter extends TypeAdapter<TimeUse> {
   @override
-  final int typeId = 1;
+  final int typeId = 3;
 
   @override
-  Alphabet read(BinaryReader reader) {
+  TimeUse read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Alphabet(
-      letter: fields[0] as String,
-      image: fields[1] as String,
-      isLock: fields[2] as bool,
-      numOfstars: fields[3] as int,
-      routeName: fields[4] as String,
-      pronunciation: fields[5] as String,
+    return TimeUse(
+      day: fields[0] as String,
+      watchVideo: fields[1] as num,
+      learn: fields[2] as num,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Alphabet obj) {
+  void write(BinaryWriter writer, TimeUse obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.letter)
-      ..writeByte(1)
-      ..write(obj.image)
-      ..writeByte(2)
-      ..write(obj.isLock)
       ..writeByte(3)
-      ..write(obj.numOfstars)
-      ..writeByte(4)
-      ..write(obj.routeName)
-      ..writeByte(5)
-      ..write(obj.pronunciation);
+      ..writeByte(0)
+      ..write(obj.day)
+      ..writeByte(1)
+      ..write(obj.watchVideo)
+      ..writeByte(2)
+      ..write(obj.learn);
   }
 
   @override
@@ -50,7 +41,7 @@ class AlphabetAdapter extends TypeAdapter<Alphabet> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AlphabetAdapter &&
+      other is TimeUseAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

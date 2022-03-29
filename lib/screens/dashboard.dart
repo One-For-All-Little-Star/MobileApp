@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/screens/dashboard_tabs/about_us.dart';
+import 'package:litter_star/screens/dashboard_tabs/lessons_learned.dart';
 import 'package:litter_star/screens/dashboard_tabs/time_chart.dart';
 import 'package:litter_star/screens/dashboard_tabs/videos_watched.dart';
-import 'package:litter_star/utils/get_hex_color.dart';
 import 'package:litter_star/utils/layouts.dart';
 
 class Dashboard extends StatefulWidget {
@@ -165,23 +165,18 @@ class _DashboardState extends State<Dashboard> {
                     seletedIndex = e;
                   })
                 },
-                children: [
+                children: const [
                   ///Time use this app
-                  const TimeChart(),
+                  TimeChart(),
 
                   /// History watch video
-                  const VideosWatched(),
+                  VideosWatched(),
 
                   /// Review lesson that complete
-                  Container(
-                    child: Text("page 2"),
-                  ),
+                  LessonsLearned(),
 
                   ///About us
-                  const AboutUs(),
-                  Container(
-                    child: Text("Back"),
-                  ),
+                  AboutUs(),
                 ],
               ),
             ))

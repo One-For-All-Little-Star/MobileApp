@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -8,7 +10,6 @@ import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/utils/sounds.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
-import 'dart:async';
 
 class AlphabetLesson extends StatefulWidget {
   const AlphabetLesson({Key? key}) : super(key: key);
@@ -32,6 +33,8 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
     }
     letter = crrDataLesson.letter;
     Sounds.playReadLetter(routeName.toString());
+    // first read
+    startLessonSounds(routeName.toString());
     super.initState();
   }
 
@@ -60,8 +63,6 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
   @override
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
-    // first read
-    startLessonSounds(routeName.toString());
 
     return Container(
       decoration: const BoxDecoration(

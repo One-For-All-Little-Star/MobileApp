@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/flame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:litter_star/data/migration_data.dart';
 import 'package:litter_star/routers/app_screens.dart';
-import 'package:flame/flame.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/sounds.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -23,6 +23,7 @@ Future<void> main() async {
   }
 
   /// Require premission
+  // ignore: unused_local_variable
   Map<Permission, PermissionStatus> statuses = await [
     Permission.bluetooth,
     Permission.microphone,
@@ -53,9 +54,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Timer _timer;
-  int _secondCount = 0;
-
   @override
   void initState() {
     super.initState();
@@ -63,20 +61,12 @@ class _MyAppState extends State<MyApp> {
       Sounds.playBackgroundSound();
     }
     migrationData();
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _secondCount += 1;
-      });
-
-      Hive.box("database").put("timeUse", _secondCount);
-    });
   }
 
   @override
   void dispose() {
     Hive.close();
-    _timer.cancel();
+    Sounds.dispose();
     super.dispose();
   }
 

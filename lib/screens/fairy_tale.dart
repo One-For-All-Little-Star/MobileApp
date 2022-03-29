@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:litter_star/data/video_list.dart';
 import 'package:litter_star/utils/get_hex_color.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/utils/sounds.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
-import 'package:get/get.dart';
 import 'package:litter_star/widgets/video_item.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -27,7 +29,7 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
   ///control search video by text
   final searchController = TextEditingController();
   final originVideoList = VideoList.getVideoList();
-  var videosShowed;
+  var videosShowed = VideoList.getVideoList();
 
   void searchVideo(String text) {
     setState(() {
@@ -47,6 +49,7 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
     if (hasSound.value) {
       Sounds.pauseBackgroundSound();
     }
+
     _initSpeech();
   }
 

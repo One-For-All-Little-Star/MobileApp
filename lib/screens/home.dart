@@ -42,9 +42,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 BtnWithBG(
-                  onPressed: () {
-                    // TODO: Shop Screen
-                  },
+                  onPressed: () => Get.toNamed(Routes.SHOP),
                   bgName: "shop.png",
                   text: "",
                   height: size.height / 5,

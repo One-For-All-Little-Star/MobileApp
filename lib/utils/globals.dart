@@ -41,12 +41,13 @@ String? getCurrentLetter() {
   return Hive.box("database").get("currentLetter");
 }
 
-// List<dynamic> getLessonHistory() {
-//   return Hive.box("database").get("alphabet");
-// }
-// List<dynamic> getWatchVideoHistory() {
-//   return Hive.box("database").get("alphabet");
-// }
+List<dynamic> getLessonHistory() {
+  return Hive.box("database").get("lessons_learned");
+}
+
+List<dynamic> getWatchVideoHistory() {
+  return Hive.box("database").get("videos_watched");
+}
 
 bool isLoggedIn = false;
 RxBool hasSound = true.obs;

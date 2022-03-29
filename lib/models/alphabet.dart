@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'alphabet.g.dart';
 
 @HiveType(typeId: 1)
@@ -9,6 +10,7 @@ class Alphabet {
     this.isLock = true,
     this.numOfstars = 0,
     required this.routeName,
+    required this.pronunciation,
   });
   @HiveField(0)
   final String letter;
@@ -20,6 +22,8 @@ class Alphabet {
   int numOfstars;
   @HiveField(4)
   final String routeName;
+  @HiveField(5)
+  final String pronunciation;
 
   @override
   String toString() {
@@ -33,6 +37,7 @@ class Alphabet {
       isLock: json['isLock'],
       numOfstars: json['numOfStars'],
       routeName: json['routeName'],
+      pronunciation: json['pronunciation'],
     );
   }
 }

@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:async';
 
 class Sounds {
   static Future initialize() async {
@@ -42,7 +43,7 @@ class Sounds {
 
   static void playReadLetter(String letter) {
     if (kIsWeb) return;
-    FlameAudio.play('$letter.mp3');
+    FlameAudio.audioCache.play('$letter.mp3');
   }
 
   static void playLetRead() {

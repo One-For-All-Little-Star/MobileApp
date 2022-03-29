@@ -22,7 +22,7 @@ class BtnWithBG extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
+    return GestureDetector(
       child: Container(
         width: width,
         height: height,
@@ -53,7 +53,7 @@ class BtnWithBG extends StatelessWidget {
                 ),
         ),
       ),
-      onPressed: onPressed,
+      onTap: onPressed,
     );
   }
 }
