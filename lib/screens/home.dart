@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = Layouts.getSize(context);
     return Scaffold(
-      appBar: null,
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -20,9 +19,8 @@ class HomeScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        padding: EdgeInsets.fromLTRB(0, 0, size.height * 0.05, 0),
+        padding: EdgeInsets.fromLTRB(0, 5, size.height * 0.05, 0),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             const Header(),
             // Body

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -10,12 +11,12 @@ class TimeChart extends StatefulWidget {
 }
 
 class _TimeChartState extends State<TimeChart> {
-  late List<TimeUseData> _timeChartData;
+  late List<dynamic> _timeChartData;
   late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
-    _timeChartData = getTimeChartData();
+    _timeChartData = getTimeData();
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
@@ -104,24 +105,20 @@ class _TimeChartState extends State<TimeChart> {
           legend: Legend(isVisible: true),
           tooltipBehavior: _tooltipBehavior,
           series: <ChartSeries>[
-            // StackedAreaSeries()
-            // StackedAreaSegment()
-            // StackedBarSeries()
-            // StackedLineSeries
-            StackedAreaSeries<TimeUseData, String>(
+            StackedAreaSeries<dynamic, String>(
               dataSource: _timeChartData,
-              xValueMapper: (TimeUseData data, _) => data.day,
-              yValueMapper: (TimeUseData data, _) => data.watchVideo,
+              xValueMapper: (dynamic data, _) => data.day,
+              yValueMapper: (dynamic data, _) => data.watchVideo,
               name: 'Xem video\n(phút)',
               color: Colors.greenAccent.shade700,
               markerSettings: const MarkerSettings(
                 isVisible: true,
               ),
             ),
-            StackedAreaSeries<TimeUseData, String>(
+            StackedAreaSeries<dynamic, String>(
                 dataSource: _timeChartData,
-                xValueMapper: (TimeUseData data, _) => data.day,
-                yValueMapper: (TimeUseData data, _) => data.learn,
+                xValueMapper: (dynamic data, _) => data.day,
+                yValueMapper: (dynamic data, _) => data.learn,
                 name: 'Học\n(phút)',
                 color: Colors.yellow.shade800,
                 markerSettings: const MarkerSettings(
@@ -133,23 +130,4 @@ class _TimeChartState extends State<TimeChart> {
       )
     ]);
   }
-
-  /// get data time use
-  List<TimeUseData> getTimeChartData() {
-    final List<TimeUseData> timeChartData = [
-      TimeUseData("22/03", 12, 33),
-      TimeUseData("23/03", 10, 38),
-      TimeUseData("24/03", 16, 4),
-      TimeUseData("25/03", 12, 25),
-    ];
-
-    return timeChartData;
-  }
-}
-
-class TimeUseData {
-  TimeUseData(this.day, this.watchVideo, this.learn);
-  final String day;
-  final num watchVideo;
-  final num learn;
 }
