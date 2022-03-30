@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/flame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -41,6 +42,9 @@ Future<void> main() async {
 
   /// Init Hive
   await Hive.initFlutter();
+
+  Stripe.publishableKey =
+      "pk_test_51JmTaPFXyOaQjIGt7kFMsl8YKruI5l4I6YkdVrFJ9Ukuf1czFMIWigftOsBWFBG3lAPGMQ4AUC7bPlX6loMgGWvG00KMTs6Tq5";
 
   /// Run App
   runApp(const MyApp());

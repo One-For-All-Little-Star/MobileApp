@@ -26,6 +26,8 @@ dependencies:
   provider: ^6.0.2
   syncfusion_flutter_charts: ^19.4.56
   simple_ripple_animation: ^0.0.3
+  flutter_stripe: ^2.4.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:http/http.dart' as http;
+import 'package:litter_star/data/item_list_default.dart';
+import 'package:litter_star/models/item.dart';
+import 'package:litter_star/models/resource.dart';
 import 'package:litter_star/utils/get_hex_color.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:litter_star/widgets/btn_with_bg_img.dart';
+import 'package:litter_star/widgets/shop_item.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({Key? key}) : super(key: key);
@@ -16,6 +25,7 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
   late var data;
 
+  List items = ItemListDefault.getItemListDefault();
   @override
   void initState() {
     super.initState();
@@ -23,6 +33,13 @@ class _ShopScreenState extends State<ShopScreen> {
       data = getResourceValue();
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Map<String, dynamic>? paymentIntentData;
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +84,11 @@ class _ShopScreenState extends State<ShopScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Wrap(
+                          spacing: 10,
                           children: [
-                            Stack(
-                              alignment: const Alignment(0, 0.5),
-                              children: [
-                                Container(
+                            for (var item in items)
+                              GestureDetector(
+                                child: Container(
                                   decoration: const BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
@@ -80,16 +97,15 @@ class _ShopScreenState extends State<ShopScreen> {
                                     ),
                                   ),
                                   height: size.height * 0.3,
-                                  width: size.width * 0.1,
-                                  child: Image(
-                                    image: const AssetImage(
-                                        "assets/icons/little_gold.png"),
-                                    height: size.height * 0.2,
-                                    width: size.width * 0.05,
-                                  ),
+                                  width: size.width * 0.15,
+                                  child: ShopItem(item),
                                 ),
-                              ],
-                            )
+                                onTap: item.isCoin
+                                    ? () async {
+                                        await makePayment(item);
+                                      }
+                                    : () {},
+                              ),
                           ],
                         ),
                         const Text(
@@ -127,5 +143,78 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> makePayment(Item item) async {
+    try {
+      paymentIntentData = await createPaymentIntent(item.price, "VND");
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: paymentIntentData!['client_secret'],
+        applePay: true,
+        googlePay: true,
+        merchantCountryCode: "VN",
+        merchantDisplayName: "Little Star",
+      ));
+
+      displayPaymentSheet(item);
+    } catch (e) {
+      print('exception' + e.toString());
+    }
+  }
+
+  displayPaymentSheet(Item item) async {
+    try {
+      await Stripe.instance.presentPaymentSheet(
+          parameters: PresentPaymentSheetParameters(
+              clientSecret: paymentIntentData!['client_secret'],
+              confirmPayment: true));
+      setState(() {
+        paymentIntentData = null;
+      });
+
+      if (item.isCoin) {
+        updateGold(int.parse(item.name));
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Thanh toán thành công!")));
+    } on StripeException catch (e) {
+      print(e.toString());
+
+      showDialog(
+        context: context,
+        builder: (_) => const AlertDialog(
+          content: Text("Thanh toán bị huỷ"),
+        ),
+      );
+    }
+  }
+
+  createPaymentIntent(int amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': "$amount",
+        "currency": currency,
+        'payment_method_types[]': 'card'
+      };
+
+      var responsive = await http.post(
+          Uri.parse("https://api.stripe.com/v1/payment_intents"),
+          body: body,
+          headers: {
+            'Authorization':
+                'Bearer sk_test_51JmTaPFXyOaQjIGtnPZxJm2qYajJhrb0FMkghNK2SbDyXIRt3vVdFSGWjaHeVWGsbCYNJKsoKKOKaTLDl5joSsXE00oWMOm2YP',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+      return jsonDecode(responsive.body.toString());
+    } catch (e) {
+      print('exception' + e.toString());
+    }
+  }
+
+  updateGold(int gold) async {
+    Resource tempResource = getResourceValue();
+    tempResource.gold += gold;
+    await Hive.box("database").put("resource", tempResource);
   }
 }
