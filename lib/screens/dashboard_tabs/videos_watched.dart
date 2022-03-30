@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:litter_star/data/video_list.dart';
+import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/widgets/video_item.dart';
 
 class VideosWatched extends StatefulWidget {
@@ -10,7 +10,7 @@ class VideosWatched extends StatefulWidget {
 }
 
 class _VideosWatchedState extends State<VideosWatched> {
-  final videosWatchedList = VideoList.getVideoList();
+  final videosWatchedList = getVideosWatched();
   @override
   void initState() {
     super.initState();

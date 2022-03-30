@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:litter_star/models/video.dart';
 import 'package:litter_star/routers/app_screens.dart';
+import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
 
 class VideoItem extends StatelessWidget {
@@ -19,7 +21,14 @@ class VideoItem extends StatelessWidget {
       ),
       elevation: 5,
       child: InkWell(
-        onTap: () => {Get.toNamed("${Routes.WATCH_VIDEO}?link=${video.link}")},
+        onTap: () async {
+          List temp = getVideosWatched();
+          temp.toList();
+          temp.add(video);
+          await Hive.box('database').put("videosWatched", temp);
+
+          Get.toNamed("${Routes.WATCH_VIDEO}?link=${video.link}");
+        },
         child: Stack(
           alignment: const Alignment(-1, 1),
           children: [

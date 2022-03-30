@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -53,17 +51,12 @@ class _CompleteScreenState extends State<CompleteScreen> {
         }
         if (isCheckWriting()) {
           crrDataLesson.numOfstars += 1;
-          totalGold += 100;
+          totalGold += 50;
         }
         break;
       case 2:
         if (isCheckPronunciation() && isCheckWriting()) {
           crrDataLesson.numOfstars += 1;
-        }
-        if (isCheckPronunciation()) {
-          totalGold += 50;
-        }
-        if (isCheckWriting()) {
           totalGold += 100;
         }
         break;
@@ -97,17 +90,13 @@ class _CompleteScreenState extends State<CompleteScreen> {
     allDataLesson[crrIndexLesson] = crrDataLesson;
     Hive.box("database").put("alphabet", allDataLesson);
 
-    log("open complete screen");
+    //reset
+    Hive.box('database').put("pronunciation", false);
+    Hive.box('database').put("writing", false);
   }
 
   @override
-  Future<void> dispose() async {
-    //reset
-    totalGold = 0;
-    totalStar = 1;
-    await Hive.box('database').put("pronunciation", false);
-    await Hive.box('database').put("writing", false);
-    log("close complete screen");
+  void dispose() {
     super.dispose();
   }
 
@@ -199,9 +188,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
                 ),
               ),
               BtnWithBG(
-                onPressed: () {
-                  Get.toNamed(Routes.ALPHABET);
-                },
+                onPressed: () => Get.offAndToNamed(Routes.ALPHABET),
                 bgName: "long_btn_yellow.png",
                 text: "Quay lại",
                 height: 60,

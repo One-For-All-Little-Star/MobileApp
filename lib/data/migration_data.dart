@@ -5,11 +5,13 @@ import 'package:litter_star/data/alphabet_list_default.dart';
 import 'package:litter_star/models/alphabet.dart';
 import 'package:litter_star/models/resource.dart';
 import 'package:litter_star/models/time_use.dart';
+import 'package:litter_star/models/video.dart';
 
 Future<void> migrationData() async {
   Hive.registerAdapter(AlphabetAdapter());
   Hive.registerAdapter(ResourceAdapter());
   Hive.registerAdapter(TimeUseAdapter());
+  Hive.registerAdapter(VideoAdapter());
 
   /// Set up database
   Box box = await Hive.openBox("database");
@@ -58,8 +60,8 @@ Future<void> migrationData() async {
   }
 
   /// set default videos watched
-  var videoWatched = box.get("videoWatched");
+  var videoWatched = box.get("videosWatched");
   if (videoWatched == null) {
-    box.put("videoWatched", List.empty());
+    box.put("videosWatched", List.empty());
   }
 }

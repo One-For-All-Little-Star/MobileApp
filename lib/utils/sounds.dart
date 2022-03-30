@@ -48,27 +48,27 @@ class Sounds {
 
   static void playLetRead() {
     if (kIsWeb) return;
-    FlameAudio.play('let_read.mp3');
+    FlameAudio.audioCache.play('let_read.mp3');
   }
 
   static void playCompleteLesson() {
     if (kIsWeb) return;
-    FlameAudio.play('complete.mp3');
+    FlameAudio.audioCache.play('complete.mp3');
   }
 
   static void playReadTrue() {
     if (kIsWeb) return;
-    FlameAudio.playLongAudio('read_true.mp3');
+    FlameAudio.audioCache.play('read_true.mp3');
   }
 
   static void playReadFalse() {
     if (kIsWeb) return;
-    FlameAudio.playLongAudio('read_false.mp3');
+    FlameAudio.audioCache.play('read_false.mp3');
   }
 
   static void playUseMicro() {
     if (kIsWeb) return;
-    FlameAudio.playLongAudio('use_micro.mp3');
+    FlameAudio.audioCache.play('use_micro.mp3');
   }
 
   static void dispose() {

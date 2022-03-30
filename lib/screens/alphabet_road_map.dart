@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:litter_star/models/time_use.dart';
 import 'package:litter_star/routers/app_screens.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
@@ -14,6 +15,9 @@ class AlphabetRoadMap extends StatefulWidget {
 
 class _AlphabetRoadMapState extends State<AlphabetRoadMap> {
   late final List lessons;
+
+  ///timer
+  DateTime timerStart = DateTime.now();
   @override
   void initState() {
     super.initState();
@@ -22,6 +26,19 @@ class _AlphabetRoadMapState extends State<AlphabetRoadMap> {
 
   @override
   void dispose() {
+    ///update timer in database
+    var timeData = getTimeData();
+    var today = DateTime.now();
+    if (timeData.last.day == "${today.day}/${today.month}") {
+      timeData.last.learn += DateTime.now().difference(timerStart).inMinutes;
+    } else {
+      timeData.add(TimeUse(
+        day: "${today.day}/${today.month}",
+        watchVideo: 0,
+        learn: DateTime.now().difference(timerStart).inMinutes,
+      ));
+    }
+    updateTimeData(timeData);
     super.dispose();
   }
 
@@ -119,7 +136,9 @@ class _AlphabetRoadMapState extends State<AlphabetRoadMap> {
                         Row(
                           children: [
                             BtnWithBG(
-                              onPressed: () => Get.toNamed(Routes.HOME),
+                              onPressed: () {
+                                Get.offAndToNamed(Routes.HOME);
+                              },
                               bgName: "btn_yellow.png",
                               text: "Quay\nLại",
                               height: size.height * 0.2,

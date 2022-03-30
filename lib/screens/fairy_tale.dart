@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/data/video_list.dart';
+import 'package:litter_star/models/time_use.dart';
 import 'package:litter_star/utils/get_hex_color.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
@@ -25,6 +26,9 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false, isListening = false;
   String _lastWords = '';
+
+  ///timer
+  DateTime timerStart = DateTime.now();
 
   ///control search video by text
   final searchController = TextEditingController();
@@ -49,7 +53,6 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
     if (hasSound.value) {
       Sounds.pauseBackgroundSound();
     }
-
     _initSpeech();
   }
 
@@ -59,6 +62,20 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
       Sounds.resumeBackgroundSound();
     }
     searchController.dispose();
+
+    ///update timer in database
+    var timeData = getTimeData();
+    var today = DateTime.now();
+    if (timeData.last.day == "${today.day}/${today.month}") {
+      timeData.last.watchVideo +=
+          DateTime.now().difference(timerStart).inMinutes;
+    } else {
+      timeData.add(TimeUse(
+          day: "${today.day}/${today.month}",
+          watchVideo: DateTime.now().difference(timerStart).inMinutes,
+          learn: 0));
+    }
+    updateTimeData(timeData);
     super.dispose();
   }
 
@@ -245,7 +262,7 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
                                   backgroundColor: Colors.white,
                                   color: Colors.black,
                                   decoration: TextDecoration.none,
-                                  fontSize: 45),
+                                  fontSize: 35),
                             ),
                           )
                       ],

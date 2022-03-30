@@ -40,6 +40,7 @@ class _AlphabetLesssonState extends State<AlphabetLesson> {
 
   @override
   void dispose() {
+    Sounds.stopBackgroundSound();
     if (hasSound.value) {
       Sounds.resumeBackgroundSound();
     }

@@ -41,13 +41,16 @@ String? getCurrentLetter() {
   return Hive.box("database").get("currentLetter");
 }
 
-List<dynamic> getLessonHistory() {
-  return Hive.box("database").get("lessons_learned");
+List<dynamic> getVideosWatched() {
+  return Hive.box("database").get("videosWatched");
 }
 
-List<dynamic> getWatchVideoHistory() {
-  return Hive.box("database").get("videos_watched");
+List<dynamic> getTimeData() {
+  return Hive.box("database").get("timeUse");
 }
 
-bool isLoggedIn = false;
+void updateTimeData(List<dynamic> newTimeData) {
+  Hive.box("database").put("timeUse", newTimeData);
+}
+
 RxBool hasSound = true.obs;
