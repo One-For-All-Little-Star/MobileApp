@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:litter_star/utils/layouts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
 import '../utils/get_hex_color.dart';
 
 // import 'home.dart';
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
           "assets/images/load_background.png",
           height: size.height,
           width: size.width,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
