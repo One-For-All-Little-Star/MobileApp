@@ -111,10 +111,11 @@ class _ShopScreenState extends State<ShopScreen> {
                               ),
                           ],
                         ),
-                        const Text(
-                          "    Chào mừng bé đến với cửa hàng",
+                        Text(
+                          "Chào mừng bé đến với cửa hàng",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: size.height * 0.035,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
