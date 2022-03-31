@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+  // ignore: prefer_typing_uninitialized_variables
   late var data;
 
   List items = ItemListDefault.getItemListDefault();

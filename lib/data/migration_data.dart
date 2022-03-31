@@ -46,6 +46,9 @@ Future<void> migrationData() async {
   var timeUse = box.get("timeUse");
   if (timeUse == null) {
     box.put("timeUse", [
+      TimeUse(day: "29/3", watchVideo: 12, learn: 6),
+      TimeUse(day: "30/3", watchVideo: 12, learn: 6),
+      TimeUse(day: "31/3", watchVideo: 5, learn: 15),
       TimeUse(
           day: "${DateTime.now().day}/${DateTime.now().month}",
           watchVideo: 0,

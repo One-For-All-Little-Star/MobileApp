@@ -75,10 +75,6 @@ class _FairyTaleScreenState extends State<FairyTaleScreen> {
           watchVideo: DateTime.now().difference(timerStart).inMinutes,
           learn: 0));
     }
-    // updateTimeData([
-    //   TimeUse(day: "28", watchVideo: 5, learn: 10),
-    //   TimeUse(day: "29", watchVideo: 12, learn: 6),
-    // ]);
     updateTimeData(timeData);
     super.dispose();
   }
