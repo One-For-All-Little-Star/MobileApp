@@ -22,8 +22,8 @@ class _CompleteScreenState extends State<CompleteScreen> {
   late final int crrIndexLesson;
   int totalGold = 0; // the number of gold when complete a lesson
   int totalStar = 1; // the number of star when complete a lesson
-  late Resource
-      tempResource; // temp varriable to save and update the number gold and star in db
+  Resource tempResource =
+      getResourceValue(); // temp varriable to save and update the number gold and star in db
   @override
   void initState() {
     super.initState();
@@ -35,40 +35,47 @@ class _CompleteScreenState extends State<CompleteScreen> {
 
     crrIndexLesson =
         allDataLesson.indexWhere((e) => e.routeName == crrDataLesson.routeName);
-
-    tempResource = getResourceValue();
-
-    ///calculate star and gold
-    switch (crrDataLesson.numOfstars) {
-      case 0:
-        crrDataLesson.numOfstars = 1;
-        totalGold += 50;
-        break;
-      case 1:
-        if (isCheckPronunciation()) {
-          crrDataLesson.numOfstars += 1;
+    setState(() {
+      ///calculate star and gold
+      switch (crrDataLesson.numOfstars) {
+        case 0:
+          crrDataLesson.numOfstars = 1;
           totalGold += 50;
-        }
-        if (isCheckWriting()) {
-          crrDataLesson.numOfstars += 1;
-          totalGold += 50;
-        }
-        break;
-      case 2:
-        if (isCheckPronunciation() && isCheckWriting()) {
-          crrDataLesson.numOfstars += 1;
-          totalGold += 100;
-        }
-        break;
-      default:
-    }
+          if (isCheckPronunciation()) {
+            crrDataLesson.numOfstars += 1;
+            totalGold += 50;
+          }
+          if (isCheckWriting()) {
+            crrDataLesson.numOfstars += 1;
+            totalGold += 50;
+          }
+          break;
+        case 1:
+          if (isCheckPronunciation()) {
+            crrDataLesson.numOfstars += 1;
+            totalGold += 50;
+          }
+          if (isCheckWriting()) {
+            crrDataLesson.numOfstars += 1;
+            totalGold += 50;
+          }
+          break;
+        case 2:
+          if (isCheckPronunciation() && isCheckWriting()) {
+            crrDataLesson.numOfstars += 1;
+            totalGold += 100;
+          }
+          break;
+        default:
+      }
 
-    if (isCheckPronunciation()) {
-      totalStar++;
-    }
-    if (isCheckWriting()) {
-      totalStar++;
-    }
+      if (isCheckPronunciation()) {
+        totalStar++;
+      }
+      if (isCheckWriting()) {
+        totalStar++;
+      }
+    });
 
     ///update gold
     tempResource.gold += totalGold;

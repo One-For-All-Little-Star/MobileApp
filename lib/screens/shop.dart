@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:litter_star/data/item_list_default.dart';
 import 'package:litter_star/models/item.dart';
 import 'package:litter_star/models/resource.dart';
+import 'package:litter_star/routers/app_screens.dart';
 import 'package:litter_star/utils/get_hex_color.dart';
 import 'package:litter_star/utils/globals.dart';
 import 'package:litter_star/utils/layouts.dart';
@@ -66,7 +67,7 @@ class _ShopScreenState extends State<ShopScreen> {
               children: [
                 /// back btn
                 BtnWithBG(
-                    onPressed: () => Get.back(),
+                    onPressed: () => Get.offAndToNamed(Routes.HOME),
                     bgName: "back_button.png",
                     text: "",
                     height: 50,
